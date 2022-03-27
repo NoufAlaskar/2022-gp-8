@@ -1,0 +1,99 @@
+body {
+	font-family: 'Quicksand', sans-serif;
+}
+
+.navbar {
+	border-radius: 0px;
+}
+
+body {
+	font-size:16px;
+	line-height:25px;
+	font-family: 'Open Sans', sans-serif;
+
+}
+body.admin_panel {
+	background:#EBEBEB;
+}
+.navbar-default {
+    background-color: #F6871E;
+    border-color: #F6871E;
+	border: none;
+	border-radius: 0px;
+	box-shadow: 0 0 10px rgba(0,0,0,.29);
+    border-bottom: .0625rem #ddd solid;
+	
+	background-color: #921f33;
+    border-color: #921f33;
+
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #FFF;
+	text-transform:capitalize;
+	font-weight: 300;
+	font-size: 14px;
+}
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+    color: #C0ECF4;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover{
+    color: #FFF;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #00656f;
+    background-color: #C0ECF4;
+}
+
+
+h3 {
+	color: #921f33;
+}
+
+
+.well {
+	opacity: .9;
+	border-radius: 6px;
+    padding: 1em;
+    display: block;
+    background: #fff;
+    transition: all 300ms;
+    color: #555;
+    overflow: hidden;
+	background-color: #F5F6FA;
+	background-color: #d5d5c9;
+	
+	border-color: #F5F6FA;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.well i {
+	color: #921f33;
+}
+
+.well h5 {
+	color: #921f33;
+}
+
+
+.small {
+	font-size: 10px;
+	line-height: 15px;
+}
+
+.media {
+	border-bottom: 1px solid #CBCBCB
+}
+
+/*.label-primary {
+	padding: 5px 7px;
+	border-radius: 10px;
+	margin-right: 10px;
+	text-align: center;
+}
+*/

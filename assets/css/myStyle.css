@@ -1,0 +1,166 @@
+body {
+	font-family: 'Quicksand', sans-serif;
+}
+
+.navbar {
+	border-radius: 0px;
+	color: yellow
+}
+
+.navbar-inverse {
+    background-color: #921f33;
+    border-color: #921f33;
+	
+	background-color: #F5F6FA;
+	border-color: #F5F6FA;
+	height: 70px;
+	padding-top: 15px;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    border-radius:  20px;
+    background-color: transparent;
+	background-color: #a22c2a;
+}
+
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+	color: #a22c2a;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ffe000;
+    background: #FFF;
+    position: absolute;
+    padding: 20px;
+    height: 134px;
+    border-radius: 0px 0px 20px 20px;
+    margin-top: -15px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.navbar-inverse .navbar-brand:hover {
+	background: #d5d5c9;
+}
+
+
+.navbar-inverse .navbar-brand img {
+	height: 200px;
+	width: 100px;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #fcf8e3;
+    color: #a22c2a;
+	'line-height: 60px;
+	font-size: 20px;
+	padding: 10px 20px;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+	
+}
+
+.banner {
+	background: url(../imgs/banner2.jpg);
+	background-position: center center;
+	background-size: cover;
+	height: 600px;
+	margin-top: -70px;
+}
+
+.banner h1 {
+	position: absolute;
+    top: 40%;
+    left: 8%;
+    font-size: 75px;
+    color: #fcf8e3;
+    color: #921f33;
+	
+}
+
+.banner h1 span {
+	background: #CCC;
+	opacity: 0.8;
+	color: #921f33;
+	border-radius: 0px 0px 20px 20px;
+	padding: 20px;
+}
+
+.footer {
+	padding: 10px;
+	background-color: #a22c2a;
+	color: aliceblue;
+}
+
+.section_top {
+	background: url(../imgs/banner.jpg);
+	background-position: center center;
+	background-size: cover;
+	line-height: 120px;
+	height: 120px;
+	padding: 20px;
+	margin-top: -20px;
+	margin-bottom: 70px;
+	color: aliceblue;
+	text-align: center;
+}
+
+.section_top h1 {
+	color: #a22c2a;
+}
+
+.icons {
+	padding: 50px;
+	margin-bottom: 40px;
+}
+
+.service1 {
+	height: 150px;
+	width: 100%;
+	background: #3f7578;
+	opacity: 0.7;
+	font-size: 40px;
+	padding: 15px;
+	color: #FFF;
+	text-align: center;
+}
+
+.table>tbody>tr.active>td, .table>tbody>tr.active>th, .table>tbody>tr>td.active, .table>tbody>tr>th.active, .table>tfoot>tr.active>td, .table>tfoot>tr.active>th, .table>tfoot>tr>td.active, .table>tfoot>tr>th.active, .table>thead>tr.active>td, .table>thead>tr.active>th, .table>thead>tr>td.active, .table>thead>tr>th.active {
+	background: #01a3a4; 
+	color: #FFF;
+}
+
+.alert-danger1 {
+	/*background-color:#09C;*/
+	background-color: #3f7578;
+	color:#FFF;
+	width: 300px;
+	display: block;
+	margin: 5px 0px;
+	float: left;
+}
+
+.alert-danger2 {
+	background-color: #FFACFD;
+	color:#000;
+	text-align:left;
+	width: 300px;
+	display: block;
+	margin: 5px 0px;
+	float: right
+}
+
+.chatbot .alert-danger2 a,
+.chatbot .alert-danger1 a {
+	color: #F0FF00;
+	font-weight: bold;
+}
+
+.content {
+	background: #d5d5c9;
+}
+
+.content h2 {
+	color: #902924
+}
+
