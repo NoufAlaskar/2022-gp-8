@@ -3,7 +3,7 @@
 <h3>View Policies Under Review <a href="writePolicy.php" class="btn btn-sm btn-info" style="margin-right: 10px;">Write Policy</a></h3>
 <?php
 	
-	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and admin_id=$admin_id and approved=0 Order BY policy_id DESC";
+	$query1 = "SELECT * FROM policy WHERE (group_id=0 or admin_id=$admin_id) and approved=0 Order BY policy_id DESC";
 
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
