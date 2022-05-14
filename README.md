@@ -1,4 +1,4 @@
-# Policies
+## Policies
 # Interdoction
 Our project "سياسات"   is a software that helps users organize and manage all their policy and procedure documents centrally to make the process of distributing policies and making sure employees are complying with them easier and cost-effective. Such a system will truly be a good solution to mitigate risk by creating and distributing policies in a sufficient and timely manner. 
 # Technologies
