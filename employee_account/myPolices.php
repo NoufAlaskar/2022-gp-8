@@ -1,9 +1,8 @@
 <?php include("header.inc.php"); ?>
-
-<h3>عرض السياسات المرسلة للمراجعة <a href="writePolicy.php" class="btn btn-sm btn-info" style="margin-right: 10px;">كتابة سياسة جديدة</a></h3>
+<h3>عرض سياساتي  </h3>
 <?php
 	
-	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and admin_id=$admin_id  Order BY policy_id DESC";
+	 $query1 = "SELECT * FROM policy t1 INNER JOIN policyReaded t2 ON(t1.policy_id = t2.policy_id) WHERE (t1.group_id=$group_id or t1.group_id=0) and t1.published=1 and t2.acknowledge =1 Order BY t1.policy_id DESC";
 
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
@@ -23,7 +22,7 @@
 		  <th>مجموعة السياسة</th>
 		<th>عنوان السياسة</th>
 		<th>اسم كاتب السياسة</th>
-		<th>تاريخ كتابة السياسة</th>
+		<th>تاريخ النشر</th>
 		<th>المراجعات</th>
 	  </tr>
 	  </thead>
@@ -45,9 +44,9 @@
 			}
 			
 			echo '<td>' . $group_name . '</td>';
-			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '">' . $row1['title'] . '</a></td>';
+			echo '<td>' . $row1['title'] . '</td>';
 			$adminWritten = $row1['admin_id'];
-			$sql2 = "SELECT * FROM admin WHERE admin_id={$admin_id}";
+			$sql2 = "SELECT * FROM admin WHERE admin_id={$adminWritten}";
 			$run2 = mysqli_query($link, $sql2);
 			$row2 = mysqli_fetch_array($run2);
 			
@@ -57,7 +56,7 @@
 			$sql2 = "SELECT * FROM policyReviews WHERE policy_id={$policy_id}";
 			$run2 = mysqli_query($link, $sql2);
 			$row2No = mysqli_num_rows($run2);
-			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">' . $row2No . ' مراجعات </a></td>';
+			echo '<td><a href="readPolicy.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">قراءة السياسة</a></td>';
 			
 		echo '</tr>';
 	}
@@ -66,5 +65,4 @@
 	</tbody>
 	</table>	  
 
-</div>
-<?php include("footer.inc.php") ?>
+</div><?php include("footer.inc.php"); ?>

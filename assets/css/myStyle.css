@@ -1,5 +1,5 @@
 body {
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Cairo', sans-serif;
 }
 
 .navbar {
@@ -71,7 +71,7 @@ body {
 .banner h1 {
 	position: absolute;
     top: 40%;
-    left: 8%;
+    left: 12%;
     font-size: 75px;
     color: #fcf8e3;
     color: #921f33;

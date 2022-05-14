@@ -1,5 +1,5 @@
 <?php include("header.inc.php") ?>
-<h3>Save Your Review</h3>
+<h3>تم حفظ مراجعتك</h3>
 <?php
 if(isset($_POST['saveReview'])) {
 	$admin_id = $admin_id;
@@ -11,7 +11,7 @@ if(isset($_POST['saveReview'])) {
 	$run1 = mysqli_query($link, $sql1);
 	if($run1) {
 		echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-		echo "<p>Your Review has been sent successfully.</p>";
+		echo "<p>تم إرسال مراجعتك بنجاح.</p>";
 		echo '</div>';
 		echo '<META HTTP-EQUIV="Refresh" Content="1;PolicyDetails.php?policy_id=' . $policy_id . '">';
 	}

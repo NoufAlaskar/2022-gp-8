@@ -8,13 +8,13 @@
 	$policy_id = $_GET['policy_id'];
 	if(isset($_GET['policy_id']))
 	{
-		$sql="UPDATE policy SET approved=1,sendToHead=1 WHERE policy_id={$policy_id}";
+		$sql="UPDATE policyReaded SET acknowledge=1 WHERE policy_id={$policy_id} and employee_id=$employee_id";
 		$run = mysqli_query($link,$sql);
 		if($run){
 			echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-			echo "<p>تم إرسال سياستك بنجاح.</p>";
+			echo "<p>تمت الموافقة السياسة بنجاح.</p>";
 			echo '</div>';
-			echo '<META HTTP-EQUIV="Refresh" Content="1; URL=PolicyDetails.php?policy_id='  .$policy_id . '">';    
+			echo '<META HTTP-EQUIV="Refresh" Content="1; URL=PolicyDetails.php?policy_id=' . $policy_id .'">';    
 			exit;
 		} 
 	}

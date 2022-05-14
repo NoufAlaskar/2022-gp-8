@@ -1,7 +1,7 @@
 <?php include("header.php") ?>
 <div class="section_top">
 	<div class="container ">
-		<h1>Login</h1>
+		<h1>تسجيل الدخول</h1>
 	</div>
 </div>
 <div class="container">
@@ -18,7 +18,7 @@ if(isset($_POST['login'])){
 
 	if($login_type == 'Admin') {
 
-		 $sql="SELECT * FROM admin WHERE username='$username' and password='$password'";
+		 $sql="SELECT * FROM admin WHERE username='$username' and password='$password' and grade='Admin'";
 		
 		$run = mysqli_query($link,$sql);
 		
@@ -35,28 +35,92 @@ if(isset($_POST['login'])){
 			 exit;
 
 		} else if($count==0) {
-			$err = 'Invalid Username/Password';
+			$err = 'اسم المتسخدم / كلمة المرور غير صحيحة';
 			echo "<div class='alert alert-danger text-center' style='max-width:96%; margin: 4px auto'>";
 				echo $err;
 			echo "</div>";
 		}
 	} 
-	else if($login_type == 'user') {
-		$sql="SELECT * FROM user WHERE username='$username' and password='$password' and approved=1";
+	else if($login_type == 'Moderator') {
+		$sql="SELECT * FROM Moderator WHERE username='$username' and password='$password'";
 		$run = mysqli_query($link,$sql);
 		$row = mysqli_fetch_array($run, MYSQLI_BOTH);
 		$count = mysqli_num_rows($run);
 		if($count==1)
 		{
-			$_SESSION['user_id'] =  $row['user_id'];
+			$_SESSION['moderator_id'] =  $row['moderator_id'];
 			$_SESSION['username'] = $row['username'];
-			$_SESSION['fullname'] = $row['firstname'] . " " . $row['lastname'];
 			
-			 echo '<META HTTP-EQUIV="Refresh" Content="1; URL=user_id_account/index.php">';    
+			 echo '<META HTTP-EQUIV="Refresh" Content="1; URL=moderator_account/index.php">';    
 			 exit;
 
 		} else if($count==0) {
-			$err = 'Invalid Username/Password';
+			$err = 'اسم المتسخدم / كلمة المرور غير صحيحة';
+			echo "<div class='alert alert-danger text-center' style='max-width:500px; margin: 4px auto'>";
+				echo $err;
+			echo "</div>";
+		}
+	} else if($login_type == 'Head') {
+		$sql="SELECT * FROM admin WHERE username='$username' and password='$password' and grade='Head'";
+		$run = mysqli_query($link,$sql);
+		$row = mysqli_fetch_array($run, MYSQLI_BOTH);
+		$count = mysqli_num_rows($run);
+		if($count==1)
+		{
+			$_SESSION['admin_id'] =  $row['admin_id'];
+			$_SESSION['username'] = $row['username'];
+            $_SESSION['group_id'] = $row['group_id'];
+			$_SESSION['fullname'] = $row['fullname'];
+			$_SESSION['grade'] = $row['grade'];
+			
+			 echo '<META HTTP-EQUIV="Refresh" Content="1; URL=head_account/index.php">';    
+			 exit;
+
+		} else if($count==0) {
+			$err = 'اسم المتسخدم / كلمة المرور غير صحيحة';
+			echo "<div class='alert alert-danger text-center' style='max-width:500px; margin: 4px auto'>";
+				echo $err;
+			echo "</div>";
+		}
+	} else if($login_type == 'Executive') {
+		$sql="SELECT * FROM admin WHERE username='$username' and password='$password' and grade='Executive'";
+		$run = mysqli_query($link,$sql);
+		$row = mysqli_fetch_array($run, MYSQLI_BOTH);
+		$count = mysqli_num_rows($run);
+		if($count==1)
+		{
+			$_SESSION['admin_id'] =  $row['admin_id'];
+			$_SESSION['username'] = $row['username'];
+            $_SESSION['group_id'] = $row['group_id'];
+			$_SESSION['fullname'] = $row['fullname'];
+			$_SESSION['grade'] = $row['grade'];
+			
+			 echo '<META HTTP-EQUIV="Refresh" Content="1; URL=executive_account/index.php">';    
+			 exit;
+
+		} else if($count==0) {
+			$err = 'اسم المتسخدم / كلمة المرور غير صحيحة';
+			echo "<div class='alert alert-danger text-center' style='max-width:500px; margin: 4px auto'>";
+				echo $err;
+			echo "</div>";
+		}
+	} else if($login_type == 'Employee') {
+		$sql="SELECT * FROM Employee WHERE username='$username' and password='$password'";
+		$run = mysqli_query($link,$sql);
+		$row = mysqli_fetch_array($run, MYSQLI_BOTH);
+		$count = mysqli_num_rows($run);
+		if($count==1)
+		{
+			$_SESSION['employee_id'] =  $row['employee_id'];
+			$_SESSION['username'] = $row['username'];
+            $_SESSION['group_id'] = $row['group_id'];
+			$_SESSION['fullname'] = $row['fullname'];
+			
+			 echo '<META HTTP-EQUIV="Refresh" Content="1; URL=employee_account/index.php">';    
+			 exit;
+
+		} else if($count==0) {
+			$err = 'اسم المتسخدم / كلمة المرور غير صحيحة';
 			echo "<div class='alert alert-danger text-center' style='max-width:500px; margin: 4px auto'>";
 				echo $err;
 			echo "</div>";
@@ -66,30 +130,34 @@ if(isset($_POST['login'])){
 	?>
 			<form method="post">
 			<div class="panel panel-danger">
-				<div class="panel-heading"><h3 align="center">Login</h3></div>
+				<div class="panel-heading"><h3 align="center">تسجيل الدخول</h3></div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label for="loginType">Login Type</label>
-						<select name="loginType" id="loginType" class="form-control">
-							<option value="User">User</option>
-							<option value="Admin" selected>Administrator</option>
+						<label for="loginType">نوع التسجيل</label>
+						<select name="loginType" id="loginType" class="form-control" style="    padding: 4px 12px;">
+							
+							<option value="Admin" selected>رئيس مباشر</option>
+                            <option value="Head">رئيس قسم</option>
+							<option value="Executive">رئيس تنفيذي</option>
+							<option value="Moderator">مشرف</option>
+							<option value="Employee">موظف</option>
 						</select>
 					</div>	
 					
 					<div class="form-group">
-						<label for="username">Username</label>
-						<input type="text" name="username" id="username" class="form-control" autofocus placeholder="Enter Username" required>
+						<label for="username">اسم المستخدم</label>
+						<input type="text" name="username" id="username" class="form-control" autofocus placeholder="اسم المستخدم" required>
 					</div>
 
 					<div class="form-group">
-						<label for="password">Password</label>
-						<input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+						<label for="password">كلمة المرور</label>
+						<input type="password" name="password" id="password" class="form-control" placeholder="كلمة المرور" required>
 					</div>	
 				</div>
 				<div class="panel-footer">
 					<div class="form-group">
 						<button name="login" id="login" type="submit" class="btn btn-danger pull-right">
-							Login
+							تسجيل الدخول
 						</button><br>
 					</div>
 				</div>

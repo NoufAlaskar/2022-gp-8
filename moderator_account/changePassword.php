@@ -11,7 +11,7 @@ if(isset($_POST['changeBtn'])) {
 	$new = $_POST['new'];
 	$confirm = $_POST['confirm'];
 	
-	$sql="SELECT * FROM admin WHERE password='$current' and admin_id = {$admin_id}";
+	$sql="SELECT * FROM moderator WHERE password='$current' and moderator_id = {$moderator_id}";
 	$run = mysqli_query($link,$sql);
 	$count = mysqli_num_rows($run);
 	
@@ -24,7 +24,7 @@ if(isset($_POST['changeBtn'])) {
 	}
 	
 	if(empty($missing)) {
-		$update_sql = "UPDATE admin SET password='$new' WHERE admin_id={$admin_id}";
+		$update_sql = "UPDATE moderator SET password='$new' WHERE moderator_id={$moderator_id}";
 		$update_run = mysqli_query($link,$update_sql);
 		echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
 			echo "<p>تم تغيير كلمة السر الخاصة بك</p>";

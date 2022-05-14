@@ -2,7 +2,7 @@
 <div class="container-fluid">
 <div class="row">
 	<div class="banner">
-		<h1><span>E-Policy Management System </span></h1>
+		<h1><span>نظام إدارة السياسات الإلكترونية</span></h1>
 	</div>
 </div>
 </div>
@@ -14,12 +14,12 @@
 			<img src="assets/imgs/logo.png" class="img-responsive img-thumbnail" style="margin: 10px; height: 350px; ">
 		</div>
 		<div class="col-md-8">
-			<h2>About سیاسات</h2>
+			<h2>حول الموقع</h2>
 			<p class="lead text-muted text-justify">
-				The main aim of "سیاسات" is to develop a system for medium and large organizations to help them in managing policies and ensuring that the policy reaches the correct employees and make sure that he/she reads, understand, and acknowledge receiving it.
+				الهدف الرئيسي من "سیاسات" هو تطوير نظام للمؤسسات المتوسطة والكبيرة لمساعدتها في إدارة السياسات والتأكد من وصول السياسة إلى الموظفين المناسبين والتأكد من قراءتها وفهمها والاعتراف باستلامها.
 			</p>
 			<p class="lead text-muted text-justify">
-				A policy is written in a manner that is consistent with the standard followed in most organizations which includes a review process in which the administrators of a specific department write and review a policy. Then, the department head agrees to it, and then it is sent to an executive manager for approval and publishing.
+				تتم كتابة السياسة بطريقة تتماشى مع المعيار المتبع في معظم المؤسسات والتي تتضمن عملية مراجعة يقوم فيها مسؤولو قسم معين بكتابة السياسة ومراجعتها. ثم يوافق عليها رئيس القسم ، وبعد ذلك يتم إرسالها إلى المدير التنفيذي للموافقة عليها ونشرها.
 			</p>
 		</div>
 		

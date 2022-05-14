@@ -71,7 +71,7 @@
                     <input type="hidden" value="<?php echo strip_tags($row1['description']); ?>" class="form-control" name="data">
 				<h4>وصف السياسة</h4>
 				<p class="text-muted"><?php echo nl2br($row1['description']); ?></p>
-				</form>
+                   
 				<hr>
 				<a href="index.php" class="btn btn-sm btn-warning pull-left" >رجوع</a> 
 				
@@ -95,21 +95,7 @@
 			$run3 = mysqli_query($link, $sql3);
 			$count3 = mysqli_num_rows($run3);
 			?>
-			
-			<?php if(($admin_id <> $adminWritten) and $count3 == 0) { ?>
-				<div class="well">
-					<form method="post" action="saveReview.php">
-						<div class="form-group" style="margin-bottom: 0px;">
-							<textarea class="form-control" name="review" id="review" required autofocus rows="2"></textarea>
-							<input type="hidden" name="policy_id" value="<?php echo $policy_id ?>">
-							<input type="hidden" name="policy_group_id" value="<?php echo $policy_group_id ?>">
-							<button name="saveReview" type="submit" class="btn btn-default btn-block">
-								حفظ المراجعة
-							</button>
-						</div>
-					</form>
-				</div>
-			<?php } ?>
+
 				<?php
 					$query4 = "SELECT * FROM policyReviews WHERE policy_id={$policy_id}";
 					$result4 = mysqli_query($link, $query4);
@@ -148,52 +134,38 @@
 				if ($count4 < 3) {
 		?>
 			
-			<!--<a href="ApprovePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-info  pull-right disabled"  style="margin-right: 10px;">إرسال السياسة Head of Department </a> -->
+			<a href="ApprovePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-info  pull-right disabled"  style="margin-right: 10px;">إرسال السياسة</a>
 		
 			<?php }else if ($row1['approved'] == 0 AND $count4 >=3 AND $loggedIn_admin_id==$admin_owner_policy) {?>
-				<a href="ApprovePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-info  pull-right "  style="margin-right: 10px;">إرسال السياسة لرئيس القسم</a>
+				<a href="ApprovePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-info  pull-right "  style="margin-right: 10px;">إرسال السياسة</a>
 			<?php } elseif ($row1['approved'] == 1 and $count4 >=3) { ?>
 				<div class="alert alert-info clearfix"><span>معتمد / مرسل</span></div>
 			<?php } ?>
 		</div>
   	</div>
-  <?php
-        
-    $query1 = "SELECT * FROM policy WHERE policy_id={$policy_id} ";
-
-    $result1 = mysqli_query($link, $query1);
-    $count = mysqli_num_rows($result1);
-    if($count == 0) {
-    echo '<div class="alert alert-danger " role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-        echo "<p>لم يتم العثور على سياسات.</p>";
-    echo '</div>';
-    } else {
-        $row2 = mysqli_fetch_array($result1, MYSQLI_BOTH);
-        $admin_owner_policy =$row2['admin_id'];
-?>
-         <hr>
-        
+        <hr />
     <div class="row">
-        <?php if($admin_id == $admin_owner_policy) { ?>
+        <div class="col-md-3"></div>
         <div class="col-md-6">
             <div class="well">
-               
-                <h3>مراجعة رئيس القسم</h3>
-                <blockquote><?php echo $row1['headReview'] ?></blockquote>
+                <form method="post">
+                <div class="form-group">
+                    <textarea class="form-control" name="headReview" rows="5" required placeholder="اضف مراجعة"></textarea>
+                </div>
+                <input type="hidden" name="policy_id" value="<?php echo $policy_id ?>">
+                <input type="hidden" name="policy_group_id" value="<?php echo $policy_group_id ?>">
+                <div class="form-group text-center">
+                    <button type="submit" name="addHeadReview" class="btn btn-sm btn-primary">حفظ المراجعة</button>
+                </div>
+            </form>
             </div>
-        </div>   
-         
-         <div class="col-md-6">
-            <div class="well">
-                <h3>مراجعة الرئيس التنفيذي</h3>
-                <blockquote><?php echo $row1['extuctiveReview'] ?></blockquote>
-            </div>
-        </div>   
-         <?php } ?>
+        </div>
+        <div class="col-md-3"></div>
     </div>
-<?php	
-    }
-?>          
+        <hr />
+        <div class="row">
+        <h3>اطلاع الموظفين</h3>
+        </div>
   	</div>
   </div>
 <!--<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script>-->

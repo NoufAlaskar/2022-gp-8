@@ -1,9 +1,9 @@
 <?php include("header.inc.php"); ?>
 
-<h3>عرض السياسات المرسلة للمراجعة <a href="writePolicy.php" class="btn btn-sm btn-info" style="margin-right: 10px;">كتابة سياسة جديدة</a></h3>
+<h3>عرض السياسات المعتمدة </h3>
 <?php
 	
-	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and admin_id=$admin_id  Order BY policy_id DESC";
+	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and approved=1 and sendToHead=1 and approvedByExtuctive=1 and published=1 Order BY policy_id DESC";
 
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
@@ -45,9 +45,9 @@
 			}
 			
 			echo '<td>' . $group_name . '</td>';
-			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '">' . $row1['title'] . '</a></td>';
+			echo '<td><a href="PolicyDetailsByReader.php?policy_id=' . $row1['policy_id'] . '">' . $row1['title'] . '</a></td>';
 			$adminWritten = $row1['admin_id'];
-			$sql2 = "SELECT * FROM admin WHERE admin_id={$admin_id}";
+			$sql2 = "SELECT * FROM admin WHERE admin_id={$adminWritten}";
 			$run2 = mysqli_query($link, $sql2);
 			$row2 = mysqli_fetch_array($run2);
 			
@@ -57,7 +57,7 @@
 			$sql2 = "SELECT * FROM policyReviews WHERE policy_id={$policy_id}";
 			$run2 = mysqli_query($link, $sql2);
 			$row2No = mysqli_num_rows($run2);
-			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">' . $row2No . ' مراجعات </a></td>';
+			echo '<td><a href="PolicyDetailsByReader.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">عرض تفاصيل السياسة </a></td>';
 			
 		echo '</tr>';
 	}

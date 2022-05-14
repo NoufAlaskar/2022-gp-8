@@ -5,12 +5,12 @@ require("assets/connect.php");
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>E-Policy Management System</title>
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<title>نظام إدارة السياسات الإلكترونية</title>
+	<link href="assets/css/bootstrap-arabic.min.css" rel="stylesheet" type="text/css">
 	<link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;800&display=swap" rel="stylesheet">
 	<link href="assets/css/myStyle.css" rel="stylesheet" type="text/css">
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/bootstrap.js"></script>
@@ -28,17 +28,13 @@ require("assets/connect.php");
     <div class="collapse navbar-collapse" id="nav1">
       <ul class="nav navbar-nav navbar-right">
         <li class="active">
-			<a href="index.php"><i class="fa fa-home"></i> Home</a>
+			<a href="index.php"><i class="fa fa-home"></i> الصفحة الرئيسية</a>
 		</li>
         <li>
-			<a href="createNewAccount.php"><i class="fa fa-user-plus"></i> Create Account</a>
-		</li>
-        <li><a href="login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-        <li><a href="about.php"><i class="fa fa-pencil"></i> About Us</a></li>
-        <li><a href="contact.php"><i class="fa fa-phone"></i> Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
+        <li><a href="login.php"><i class="fa fa-sign-in"></i> تسجيل الدخول</a></li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
 
 <div class="clearfix"></div>

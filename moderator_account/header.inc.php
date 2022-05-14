@@ -8,17 +8,14 @@
 		exit();
 	}
 	
-	$admin_id = $_SESSION['admin_id'];
-	$loggedIn_admin_id = $_SESSION['admin_id'];
-	$group_id = $_SESSION['group_id'];
-	$fullname = $_SESSION['fullname'];
+	$moderator_id = $_SESSION['moderator_id'];
 	$username = $_SESSION['username'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>حساب الرئيس المباشر - <?php echo $fullname ?></title>
+    <title>حساب المشرف - <?php echo $username ?></title>
     <link href="../assets/css/bootstrap-arabic.min.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,13 +28,13 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php"><i class="fa fa-dashboard"></i> حساب الرئيس المباشر - <?php echo $fullname ?></a>
+      <a class="navbar-brand" href="index.php"><i class="fa fa-dashboard"></i> حساب المشرف - <?php echo $username ?></a>
     </div>
     <div>
       <ul class="nav navbar-nav ">
-        <li><a href="writePolicy.php">كتابة سياسة جديدة</a></li>
-        <li><a href="MyPolicies.php">السياسات المرسلة للمراجعة</a></li>
-        <li><a href="PolicyToBeReviewed.php">السياسات الواردة للمراجعة</a></li>
+        <li><a href="viewEmployees.php">عرض الموظفين</a></li>
+        <li><a href="viewGroups.php">عرض الاقسام</a></li>
+        <li><a href="viewAdmins.php">عرض الرؤساء</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">

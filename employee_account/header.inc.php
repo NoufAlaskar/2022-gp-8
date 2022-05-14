@@ -8,17 +8,21 @@
 		exit();
 	}
 	
-	$admin_id = $_SESSION['admin_id'];
-	$loggedIn_admin_id = $_SESSION['admin_id'];
+	$employee_id = $_SESSION['employee_id'];
+	$loggedIn_employee_id = $_SESSION['employee_id'];
 	$group_id = $_SESSION['group_id'];
 	$fullname = $_SESSION['fullname'];
 	$username = $_SESSION['username'];
+
+    $q1 = "SELECT * FROM policyGroup WHERE group_id={$group_id} ";
+    $res1 = mysqli_query($link, $q1);
+    $rec1 = mysqli_fetch_array($res1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>حساب الرئيس المباشر - <?php echo $fullname ?></title>
+    <title>حساب للموظف - <?php echo $fullname ?></title>
     <link href="../assets/css/bootstrap-arabic.min.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,13 +35,13 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php"><i class="fa fa-dashboard"></i> حساب الرئيس المباشر - <?php echo $fullname ?></a>
+      <a class="navbar-brand" href="index.php"><i class="fa fa-dashboard"></i> حساب للموظف - <?php echo $fullname ?> - قسم <?php echo $rec1['group_name']; ?></a>
     </div>
     <div>
       <ul class="nav navbar-nav ">
-        <li><a href="writePolicy.php">كتابة سياسة جديدة</a></li>
-        <li><a href="MyPolicies.php">السياسات المرسلة للمراجعة</a></li>
-        <li><a href="PolicyToBeReviewed.php">السياسات الواردة للمراجعة</a></li>
+        <li><a href="myPolices.php">سياساتي</a></li>
+        <li><a href="allPolicies.php">عرض السياسات الجديدة</a></li>
+        <li><a href="profile.php">حسابي</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
