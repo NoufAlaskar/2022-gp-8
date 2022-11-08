@@ -1,4 +1,4 @@
-<?php include("header.inc.php") ?>
+<?php include("header.inc.php"); $adminWritten = 0; ?>
 
   <div class="container">
   	<div class="main ">
@@ -62,7 +62,6 @@
 					<div class="col-md-6">
 						<h4>كتب بواسطة:</h4>
 						<p class="text-muted"><?php echo $row5['fullname'] ?></p>
-						
 					</div>
 				</div>
 				
@@ -70,13 +69,86 @@
                 <form method="post">
                     <input type="hidden" value="<?php echo strip_tags($row1['description']); ?>" class="form-control" name="data">
 				<h4>وصف السياسة</h4>
-				<p class="text-muted"><?php echo nl2br($row1['description']); ?></p>
+				<p class="text-muted" id="ar"><?php echo nl2br($row1['description']); ?></p>
+				<div class="row">
+					<div class="col-md-8 text-left">
+						<input type="submit" value="Translate" class="btn btn-sm btn-info" name="translateBtn">
+					</div>
+					<div class="col-md-4 text-right">
+						<select class="form-control input-sm" id="voiceSelection">
+							<option value="Arabic Male">عربي</option>
+							<option value="UK English Male">English</option>
+						</select>
+						<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+						<script>
+							function SpeechNow() {
+								//alert('Speech Now');
+								var v = $('#voiceSelection').val();
+								var text = document.getElementById('ar').textContent;
+								///alert('Voice : ' + v);
+								if (v == 'Arabic Male' || v == 'Arabic Female') {
+									$("#TranslationDiv").removeClass("enTranslationDir");
+									$("#TranslationDiv").addClass("arTranslationDir");
+								} else {
+									var text =document.getElementById('TranslationDiv').textContent;
+									$("#TranslationDiv").removeClass("arTranslationDir");
+									$("#TranslationDiv").addClass("enTranslationDir");
+								}
+								responsiveVoice.speak(text,v);
+							}
+
+						</script>
+						<input type="button" onclick="SpeechNow()"  class="btn btn-sm btn-info pull-right" type="button" value="قراءة">
+						<!--<input onclick="responsiveVoice.speak('<?php echo strip_tags($row1[2]); ?>','Arabic Male');" class="btn btn-sm btn-info pull-right" type="button" value="Play "> -->
+						
+					</div>
+				</div>
+                  
 				</form>
-				<hr>
-				<a href="index.php" class="btn btn-sm btn-warning pull-left" >رجوع</a> 
 				
+<?php
+if(isset($_POST['translateBtn'])) {
+   $data = $_POST['data'];
+    // When you have your own client ID and secret, put them down here:
+    $CLIENT_ID = "FREE_TRIAL_ACCOUNT";
+    $CLIENT_SECRET = "PUBLIC_SECRET";
+
+    // Specify your translation requirements here:
+    $postData = array(
+      'fromLang' => "ar",
+      'toLang' => "en",
+      'text' => $data
+    );
+
+    $headers = array(
+      'Content-Type: application/json',
+      'X-WM-CLIENT-ID: '.$CLIENT_ID,
+      'X-WM-CLIENT-SECRET: '.$CLIENT_SECRET
+    );
+
+    $url = 'http://api.whatsmate.net/v1/translation/translate';
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+
+    $response = curl_exec($ch);
+	echo "<h4  style='text-align: left;direction: ltr;'>Policy Translated</h4>";
+    echo "<p style='text-align: left;direction: ltr;' class='text-muted' id='TranslationDiv'>".$response ."</p>";
+    curl_close($ch);
+}
+?>
+				<hr>
+				<a href="index.php" class="btn btn-sm btn-warning pull-right" >رجوع</a> 
 				<?php if($admin_id == $adminWritten) { ?>
-				<a href="editPolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-success pull-right">تحديث السياسة</a>  
+					 
+					<a href="editPolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-success ">تعديل السياسة</a> &nbsp; 
+					<?php if(isset($_GET['canArchive']) and $_GET['canArchive'] == true) { ?>
+						<a href="archivePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-primary ">نقل السياسة للارشيف</a>  
+				
+						<?php } ?>
 				<?php } ?>
 				<br>
 			</div>
@@ -148,7 +220,7 @@
 				if ($count4 < 3) {
 		?>
 			
-			<!--<a href="ApprovePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-info  pull-right disabled"  style="margin-right: 10px;">إرسال السياسة Head of Department </a> -->
+			
 		
 			<?php }else if ($row1['approved'] == 0 AND $count4 >=3 AND $loggedIn_admin_id==$admin_owner_policy) {?>
 				<a href="ApprovePolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-info  pull-right "  style="margin-right: 10px;">إرسال السياسة لرئيس القسم</a>
@@ -157,7 +229,8 @@
 			<?php } ?>
 		</div>
   	</div>
-  <?php
+       
+<?php
         
     $query1 = "SELECT * FROM policy WHERE policy_id={$policy_id} ";
 
@@ -177,7 +250,7 @@
         <?php if($admin_id == $admin_owner_policy) { ?>
         <div class="col-md-6">
             <div class="well">
-               
+                
                 <h3>مراجعة رئيس القسم</h3>
                 <blockquote><?php echo $row1['headReview'] ?></blockquote>
             </div>
@@ -185,7 +258,7 @@
          
          <div class="col-md-6">
             <div class="well">
-                <h3>مراجعة الرئيس التنفيذي</h3>
+                <h3>مراجعة المدير التنفيذي</h3>
                 <blockquote><?php echo $row1['extuctiveReview'] ?></blockquote>
             </div>
         </div>   
@@ -193,8 +266,9 @@
     </div>
 <?php	
     }
-?>          
+?>
   	</div>
   </div>
-<!--<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script>-->
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script>
+
 <?php include("footer.inc.php") ?>

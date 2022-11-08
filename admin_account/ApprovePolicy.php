@@ -12,7 +12,7 @@
 		$run = mysqli_query($link,$sql);
 		if($run){
 			echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-			echo "<p>تم إرسال سياستك بنجاح.</p>";
+			echo "<p>تمت الموافقة على سياستك بنجاح.</p>";
 			echo '</div>';
 			echo '<META HTTP-EQUIV="Refresh" Content="1; URL=PolicyDetails.php?policy_id='  .$policy_id . '">';    
 			exit;
@@ -23,3 +23,4 @@
 		</div>
 	</div>
   </div>
+  <?php include("footer.inc.php") ?>

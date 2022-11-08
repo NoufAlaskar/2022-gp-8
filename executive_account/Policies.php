@@ -1,10 +1,10 @@
 <?php include("header.inc.php"); ?>
 
-<h3>عرض السياسات المقبولة </h3>
+<h3>عرض السياسات المعتمدة </h3>
 <?php
 	
-     $query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and published=1 Order BY policy_id DESC";
-     
+    // $query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and approvedByExtuctive=1 and extuctiveReview is not null and published=0 Order BY policy_id DESC";
+     $query1 = "SELECT * FROM policy WHERE approvedByExtuctive=1 and published <> -1 Order BY policy_id DESC";
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
 	if($count == 0) {
@@ -22,8 +22,8 @@
 		<th>رقم.</th>
 		  <th>مجموعة السياسة</th>
 		<th>عنوان السياسة</th>
-		<th>اسم المسؤول</th>
-		<th>تاريخ النشر</th>
+		<th>اسم كاتب السياسة</th>
+		<th>تاريخ كتابة السياسة</th>
 		<th>نشر السياسة</th>
 	  </tr>
 	  </thead>

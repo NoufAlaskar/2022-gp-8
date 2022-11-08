@@ -10,26 +10,69 @@ if(isset($_POST['createBtn'])) {
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$current_password = $_POST['password'];
+	$password = password_hash($_POST['password'],PASSWORD_DEFAULT);
 
-     $sql1 = "select * from employee where username ='$username'";
+     $sql1 = "select * from employee where username ='$username' or email='$email'";
     $run1 = mysqli_query($link,$sql1);
     $no = mysqli_num_rows($run1);
     if($no == 0) {
-        $sql="INSERT INTO employee VALUES (NULL, '$name','$email', '$username', '$password',$group_id, $moderator_id)";
+        $sql="INSERT INTO employee VALUES (NULL, '$name','$email', '$username', '$password',$group_id, $moderator_id,0,2)";
 
         $run = mysqli_query($link,$sql);
 
         if($run){
-            echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-            echo "<p>تم اضافة الموظف بنجاح</p>";
+		
+		$query55 = "SELECT MAX(employee_id) AS employee_id FROM employee";
+		///echo $query55;
+		$result55 = mysqli_query($link,$query55);
+		$row55 = mysqli_fetch_array($result55);
+		$employee_id = 0;
+		///print_r($row55);
+		if(is_null($row55['employee_id'])) {
+			$employee_id = 1;
+		} else {
+			$employee_id = $row55['employee_id'];
+		}
+		
+		//print("New employee_id : " + $employee_id);
+		
+		
+         $to = $email;
+         $subject = "Email Activation for Members";
+         
+         
+         $message = "<h1>Just One More Step…</h1>";
+         $message .= "<h2 align='center'>Welcome {$fullname}.</h2>";
+		 $message .= "<p align='center'>Your Username : {$username}.</b>";
+		 $message .= "<p align='center'>Your Password : {$current_password}.</b>";
+		 $message .= "<p align='center'>Please Click on the button below to activate your account with us.</b>";
+		 $message .= "<p align='center'><a href='http://www.siasatt.com/activateAccount.php?EID=" . $employee_id . "'>Activate Account</a></b>";
+		
+         $header = "From:info@siasatt.com\r\n";
+         $header .= "MIME-Version: 1.0\r\n";
+         $header .= "Content-type: text/html\r\n";
+         
+         $retval = mail ($to,$subject,$message,$header);
+         
+         if( $retval == true ) {
+            
+			echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
+            echo "<p>تم حفظ حساب الموظف بنجاح.</p>";
             echo '</div>';
             echo '<META HTTP-EQUIV="Refresh" Content="1; URL=viewEmployees.php">';    
             exit;
+			
+         }else {
+            echo '<div class="alert alert-danger text-center" role="alert" style="margin:10px auto;">';
+			echo "<span>Something gone error...</span>";
+			echo '</div>';
+         }
+            
         } 
     } else {
         echo '<div class="alert alert-danger" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-        echo "<p>الموظف موجود بالفعل</p>";
+        echo "<p>الموظف موجود بالفعل في قاعدة البيانات.</p>";
         echo '</div>';
     }
 	
@@ -58,20 +101,20 @@ if(isset($_POST['createBtn'])) {
                     </div>
 					<div class="form-group">
 						<label for="name">اسم الموظف</label>
-						<input type="text" name="name" id="name" class="form-control" autofocus placeholder="اسم الموظف" required>
+						<input type="text" name="name" id="name" class="form-control" autofocus placeholder="اسم الموظف" required  oninvalid="this.setCustomValidity('نسيت ادخال اسم الموظف')" oninput="this.setCustomValidity('')">
 					</div>
 					<div class="form-group">
 						<label for="email">البريد الالكتروني</label>
-						<input type="email" name="email" id="email" class="form-control"  placeholder="ايميل الموظف" required>
+						<input type="email" name="email" id="email" class="form-control"  placeholder="اسم الموظف" required  oninvalid="this.setCustomValidity('نسيت ادخال البريد الالكتروني')" oninput="this.setCustomValidity('')">
 					</div>
 					<div class="form-group">
 						<label for="username">اسم المستخدم</label>
-						<input type="text" name="username" id="username" class="form-control" autofocus placeholder="اسم المستخدم" required>
+						<input type="text" name="username" id="username" class="form-control" autofocus placeholder="اسم المستخدم" required  oninvalid="this.setCustomValidity('نسيت ادخال اسم المستخدم')" oninput="this.setCustomValidity('')">
 					</div>
 
 					<div class="form-group">
 						<label for="password">كلمة المرور</label>
-						<input type="password" name="password" id="password" class="form-control" placeholder="كلمة المرور" required>
+						<input type="password" name="password" id="password" class="form-control" placeholder="كلمة المرور" required  oninvalid="this.setCustomValidity('نسيت ادخال كلمة المرور')" oninput="this.setCustomValidity('')">
 					</div>	
 				</div>
 				<div class="panel-footer">

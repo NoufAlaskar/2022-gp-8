@@ -22,6 +22,7 @@
 	  <tr class="active">
           <th>الرقم</th>
 		<th>اسم القسم</th>
+		<th>تعديل القسم</th>
 	  </tr>
 	  </thead>
 	  <tbody>
@@ -31,6 +32,7 @@
                 echo '<tr>';
                     echo '<td>' . $i++ . '</td>';
                     echo '<td>' . $row1['group_name'] . '</td>';
+                    echo '<td><a href="editGroup.php?group_id=' . $row1['group_id'] . '" class="btn btn-xs btn-success">تعديل</a></td>';
                 echo '</tr>'; 
              }
         }

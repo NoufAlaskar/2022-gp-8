@@ -14,7 +14,7 @@ if(isset($_POST['createBtn'])) {
 
 	if($run){
 		echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-		echo "<p>تم اضافة المجموعة بنجاح</p>";
+		echo "<p>تم حفظ المجموعة بنجاح.</p>";
 		echo '</div>';
 		echo '<META HTTP-EQUIV="Refresh" Content="1; URL=viewGroups.php">';    
 		exit;
@@ -25,12 +25,12 @@ if(isset($_POST['createBtn'])) {
 ?>
 			<form method="post">
 			<div class="panel panel-danger">
-				<div class="panel-heading"><h3 align="center">اضافة مجموعة جديد</h3></div>
+				<div class="panel-heading"><h3 align="center">اضافة قسم جديدة</h3></div>
                 
 				<div class="panel-body">
 					<div class="form-group">
-						<label for="name">اسم المجموعة</label>
-						<input type="text" name="name" id="name" class="form-control" autofocus placeholder="اسم المجموعة" required>
+						<label for="name">اسم القسم</label>
+						<input type="text" name="name" id="name" class="form-control" autofocus  placeholder="ادخال اسم القسم" required oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('نسيت ادخال اسم القسم')" >
 					</div>
 				</div>
 				<div class="panel-footer">

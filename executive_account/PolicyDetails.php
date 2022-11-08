@@ -7,6 +7,7 @@
   		<div class="col-md-7"  style="margin-top: 30px;">
 			<div class="well" style="background: #FFF">
 			<?php
+				$exe_review = "";
 				$policy_id = $_GET['policy_id'];
 				$no_reviews = 0;
 				$policy_group_id = 0;
@@ -22,6 +23,8 @@
 					$row1 = mysqli_fetch_array($result1, MYSQLI_BOTH);
 					$admin_owner_policy =$row1['admin_id'];
 					$group_id = $policy_group_id =$row1['group_id'];
+					$exe_review = $row1['extuctiveReview'];
+
 					
 					if($group_id == 0) {
 						$group_name = "عام - جميع الاقسام";
@@ -39,6 +42,7 @@
 					$no_reviews = mysqli_num_rows($run7);
 					
 					$adminWritten = $row1['admin_id'];
+					
 			?>	
 				
 				
@@ -70,22 +74,92 @@
                 <form method="post">
                     <input type="hidden" value="<?php echo strip_tags($row1['description']); ?>" class="form-control" name="data">
 				<h4>وصف السياسة</h4>
-				<p class="text-muted"><?php echo nl2br($row1['description']); ?></p>
-                 
+				<p class="text-muted" id="ar"><?php echo nl2br($row1['description']); ?></p>
+				<div class="row">
+                    <div class="col-md-8 text-left">
+					<input type="submit" value="Translate" class="btn btn-sm btn-info" name="translateBtn">
+				
+                    </div>
+                    <div class="col-md-4 text-right">
+						<select class="form-control input-sm" id="voiceSelection">
+							<option value="Arabic Male">عربي</option>
+							<option value="UK English Male">English</option>
+						</select>
+						<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+						<script>
+							function SpeechNow() {
+								//alert('Speech Now');
+								var v = $('#voiceSelection').val();
+								var text = document.getElementById('ar').textContent;
+								///alert('Voice : ' + v);
+								if (v == 'Arabic Male' || v == 'Arabic Female') {
+									$("#TranslationDiv").removeClass("enTranslationDir");
+									$("#TranslationDiv").addClass("arTranslationDir");
+								} else {
+									var text =document.getElementById('TranslationDiv').textContent;
+									$("#TranslationDiv").removeClass("arTranslationDir");
+									$("#TranslationDiv").addClass("enTranslationDir");
+								}
+								responsiveVoice.speak(text,v);
+							}
+
+						</script>
+						<input type="button" onclick="SpeechNow()"  class="btn btn-sm btn-info pull-right" type="button" value="قراءة ">
+						<!--<input onclick="responsiveVoice.speak('<?php echo strip_tags($row1[2]); ?>','Arabic Male');" class="btn btn-sm btn-info pull-right" type="button" value="Play "> -->
+						
+					</div>
+                </div>
+
+                   </form>
+				<?php
+if(isset($_POST['translateBtn'])) {
+   $data = $_POST['data'];
+    // When you have your own client ID and secret, put them down here:
+    $CLIENT_ID = "FREE_TRIAL_ACCOUNT";
+    $CLIENT_SECRET = "PUBLIC_SECRET";
+
+    // Specify your translation requirements here:
+    $postData = array(
+      'fromLang' => "ar",
+      'toLang' => "en",
+      'text' => $data
+    );
+
+    $headers = array(
+      'Content-Type: application/json',
+      'X-WM-CLIENT-ID: '.$CLIENT_ID,
+      'X-WM-CLIENT-SECRET: '.$CLIENT_SECRET
+    );
+
+    $url = 'http://api.whatsmate.net/v1/translation/translate';
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+
+    $response = curl_exec($ch);
+    echo "<h4  style='text-align: left;direction: ltr;'>Policy Translated</h4>";
+    echo "<p style='text-align: left;direction: ltr;' class='text-muted' id='TranslationDiv'>".$response ."</p>";
+    curl_close($ch);
+}
+?>
 				<hr>
 				<a href="index.php" class="btn btn-sm btn-warning pull-left" >رجوع</a> 
 				
 				<?php if($admin_id == $adminWritten) { ?>
 				<a href="editPolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-success pull-right">تحديث السياسة</a>  
 				<?php } ?>
-                 <?php if($row1['published'] == 0) { ?>
-                    <a href="PublishPolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="btn btn-sm btn-primary pull-right">نشر السياسة</a>  
-                <?php } else { ?>
-                    <span class="label label-info pull-right"><i class="fa fa-check"></i> تم النشر </span>
+                 <?php if($row1['published'] == 0 and is_null($exe_review)) { ?>
+                    <a href="PublishPolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class="disabled btn btn-sm btn-primary pull-right">نشر السياسة</a>  
+				<?php } else if($row1['approvedByExtuctive'] == 1 and !is_null($exe_review) and $row1['published'] == 0) { ?>
+                    <a href="PublishPolicy.php?policy_id=<?php echo $row1['policy_id'] ?>" class=" btn btn-sm btn-primary pull-right ">نشر السياسة</a>  
+				<?php } else if($row1['published'] == 1 and $row1['approvedByExtuctive'] == 1 and !is_null($row1['extuctiveReview'])){ ?>
+                    <span class="label label-info pull-right"><i class="fa fa-check"></i> تم النشر  </span>
                 <?php } ?>
 				<br>
 			</div>
-
  <?php	
 		}
 	?>
@@ -112,7 +186,7 @@ if(isset($_POST['addExeReview'])) {
 if(is_null($row1['extuctiveReview'])) {
 ?>
             <form method="post">
-                <h5 align="right">مراجعة الرئيس التنفيذي</h5>
+                <h5 align="right">مراجعة السياسة</h5>
                 <div class="form-group">
                     <textarea class="form-control" name="exeReview" rows="5" required placeholder="اضف مراجعة"></textarea>
                 </div>
@@ -133,5 +207,5 @@ if(is_null($row1['extuctiveReview'])) {
    
   	</div>
   </div>
-<!--<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script>-->
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script>
 <?php include("footer.inc.php") ?>

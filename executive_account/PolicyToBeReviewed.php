@@ -3,8 +3,8 @@
 <h3>عرض السياسات الواردة للمراجعة</h3>
 <?php
 	
-	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and sendToHead=1 and sendToExec=1 and published=0 ORDER BY policy_id DESC";
-
+	 $query1 = "SELECT * FROM policy WHERE sendToExec=1 and extuctiveReview IS NULL ORDER BY policy_id DESC";
+	
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
 	if($count == 0) {

@@ -1,6 +1,6 @@
 <?php include("header.inc.php"); ?>
 
-<h3>عرض السياسات المعتمدة </h3>
+<h3>عرض السياسات </h3>
 <?php
 	
 	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and approved=1 and sendToHead=1 and approvedByExtuctive=1 and published=1 Order BY policy_id DESC";
@@ -22,8 +22,8 @@
 		<th>رقم.</th>
 		  <th>مجموعة السياسة</th>
 		<th>عنوان السياسة</th>
-		<th>اسم كاتب السياسة</th>
-		<th>تاريخ كتابة السياسة</th>
+		<th>اسم كاتب السياسة </th>
+		<th>تاريخ نشر السياسة</th>
 		<th>المراجعات</th>
 	  </tr>
 	  </thead>

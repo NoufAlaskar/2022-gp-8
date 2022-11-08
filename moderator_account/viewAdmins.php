@@ -26,12 +26,12 @@
 	  <tbody>
 	<?php
         $group_id = $row1['group_id'];
-	   $query2 = "SELECT * FROM admin WHERE group_id=$group_id Order BY group_id DESC";
+	    $query2 = "SELECT * FROM admin WHERE group_id=$group_id and group_id<>0 Order BY group_id DESC";
 
         $result2 = mysqli_query($link, $query2);
         $count2 = mysqli_num_rows($result2);
         if($count2 == 0) {
-                echo "<tr><th colspan='4'><span class='text-danger'>لا يوجد رؤساء</span></th><tr>";
+                echo "<tr><th colspan='4'><span class='text-danger'>لايوجد رؤساء</span></th><tr>";
             echo '</div>';
         } else {
             ?>
@@ -50,7 +50,14 @@
              while($row2 = mysqli_fetch_array($result2)) {
                 echo '<tr>';
                     echo '<td>' . $i++ . '</td>';
-                    echo '<td>' . $row2['grade'] . '</td>';
+                    echo '<td>';
+                  
+                    if($row2['group_id']==0) {
+                        echo  "Executive";
+                    } else {
+                        echo $row2['grade']; 
+                    }
+                    echo '</td>';
                     echo '<td>' . $row2['fullname'] . '</a></td>';
                     echo '<td>' . $row2['email'] . '</a></td>';
                     echo '<td>' . $row2['username'] . '</td>';

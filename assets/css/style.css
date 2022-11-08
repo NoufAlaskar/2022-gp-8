@@ -97,3 +97,77 @@ h3 {
 	text-align: center;
 }
 */
+
+.one_question {
+	background-color: #d5d5c9;
+	margin: 10px 0px;
+	padding: 20px;
+	min-height: 100px;
+	display: block;
+	border-radius: 20px;
+
+}
+
+.one_question h4 {
+	color: #921f33;
+}
+
+.quesion_list li {
+	font-size: 16px;
+	line-height: 20px;
+	color: #555;
+}
+
+.quesion_list .fa  {
+	font-size: 20px;
+}
+
+.quesion_list .fa-check {
+	color: #921f33;
+}
+
+.examresult {
+	font-size: 13px;
+	max-width: 220px;
+	direction: rtl;
+	background-color: #FFF;
+}
+
+.examresult2 {
+	font-size: 13px;
+	margin: 5px auto;
+	direction: rtl;
+	background-color: #FFF;
+	max-width: 50%;
+}
+
+#search-btn {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#clear-btn {
+	position: absolute;
+	top: 0px;
+	left: 35px;
+	background-color: transparent;
+	border: none;
+	color: #555;
+}
+
+#voiceSelection {
+	max-width: 120px;
+	float: right;
+}
+
+.arTranslationDir {
+	direction: rtl;
+	text-align: right;
+}
+
+.enTranslationDir {
+	direction: ltr;
+	text-align: left;
+}
+

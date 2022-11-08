@@ -50,14 +50,14 @@ if(isset($_POST['SendBtn']))
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="AdminName">الاسم الكامل للمدير</label>
+								<label for="AdminName">الاسم الكامل للمسؤول</label>
 								<input type="text" id="AdminName" disabled class="form-control" value="<?php echo $username ?>" >
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 
-								<label for="date">تاريخ كتابة السياسة</label>
+								<label for="date">تاريخ النشر</label>
 								<input type="text" id="date" disabled class="form-control" value="<?php echo $row1['publish_date'] ?>" >
 							</div>
 						</div>
@@ -86,14 +86,14 @@ if(isset($_POST['SendBtn']))
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" id="subject" class="form-control" autofocus name="subject" placeholder="عنوان السياسة" required value="<?php echo $row1['title'] ?>">
+								<input type="text" id="subject" class="form-control" autofocus name="subject" placeholder="عنوان السياسة" required value="<?php echo $row1['title'] ?>" oninvalid="this.setCustomValidity('نسيت ادخال عنوان السياسة')" oninput="this.setCustomValidity('')">
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<textarea id="content" class="form-control"  name="content" placeholder="وصف السياسة" required rows="6"><?php echo $row1['description'] ?></textarea>
+								<textarea id="content" class="form-control"  name="content" placeholder="وصف السياسة" required rows="6" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('نسيت ادخال وصف السياسة')"><?php echo $row1['description'] ?></textarea>
 							</div>
 						</div>
 					</div>

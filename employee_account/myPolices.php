@@ -1,9 +1,23 @@
 <?php include("header.inc.php"); ?>
-<h3>عرض سياساتي  </h3>
-<?php
-	
-	 $query1 = "SELECT * FROM policy t1 INNER JOIN policyReaded t2 ON(t1.policy_id = t2.policy_id) WHERE (t1.group_id=$group_id or t1.group_id=0) and t1.published=1 and t2.acknowledge =1 Order BY t1.policy_id DESC";
+<h3>عرض سياساتي  
+	<form method="post" class="form-horizontal pull-right" style="position: relative">
+        <input type="search" value="<?php  if(isset($_POST['txtSearch']))  echo $_POST['txtSearch']; ?>" name="txtSearch" style="min-width:300px; padding-left:60px" class="form-control pull-right" placeholder="أدخل عنوان السياسة" required autofocus  oninvalid="this.setCustomValidity('نسيت ادخال عنوان السياسة')" oninput="this.setCustomValidity('')">
+        <button type="submit" id="search-btn" name="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+        <a href="myPolices.php" type="reset" id="clear-btn" name="reset" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+    </form>
 
+</h3>
+<?php
+	$query1 = "";
+	if(!isset($_POST['submit'])) {
+        $query1 = "SELECT * FROM policy t1 INNER JOIN policyReaded t2 ON(t1.policy_id = t2.policy_id) WHERE (t1.group_id=$group_id or t1.group_id=0) and t1.published=1 and t2.acknowledge =1 Order BY t1.policy_id DESC";
+    } else {
+        $txtSearch = $_POST['txtSearch'];
+        $query1 = "SELECT * FROM policy t1 INNER JOIN policyReaded t2 ON(t1.policy_id = t2.policy_id) WHERE (t1.group_id=$group_id or t1.group_id=0) and t1.published=1 and t2.acknowledge =1 and t1.title='$txtSearch' Order BY t1.policy_id DESC";
+
+    }
+	//$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and published=1 Order BY policy_id DESC";
+	 
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
 	if($count == 0) {
@@ -23,7 +37,8 @@
 		<th>عنوان السياسة</th>
 		<th>اسم كاتب السياسة</th>
 		<th>تاريخ النشر</th>
-		<th>المراجعات</th>
+		<th style="max-width:300px;width:300px">خيارات</th>
+		<th>درجات الاختبار</th>
 	  </tr>
 	  </thead>
 	  <tbody>
@@ -56,7 +71,49 @@
 			$sql2 = "SELECT * FROM policyReviews WHERE policy_id={$policy_id}";
 			$run2 = mysqli_query($link, $sql2);
 			$row2No = mysqli_num_rows($run2);
-			echo '<td><a href="readPolicy.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">قراءة السياسة</a></td>';
+			echo '<td><a href="readPolicy.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">قراءة السياسة</a> <a href="startPolicyExam.php?policy_id=' . $row1['policy_id'] . '&n=1" class="btn btn-xs btn-success">اخذ الاختبار</a> <a href="newViolation.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-info">التبيلغ عن انتهاك السياسة</a></td>';
+			echo '<td>';
+			$query2 = "SELECT count(*) as try FROM policyExamResult WHERE policy_id={$policy_id} and employee_id=$employee_id";
+			$result2 = mysqli_query($link, $query2);
+			$row2 = mysqli_fetch_array($result2);
+			$try = $row2['try'];
+			if($try ==0) {
+				$try =1;
+			}else {
+				$try +=1;
+			}
+			echo '<div class="well3">';
+    $sql3 = "SELECT *  FROM policyExamResult WHERE policy_id=$policy_id and employee_id=$employee_id";
+    $result3 = mysqli_query($link, $sql3);
+    $count3 = mysqli_num_rows($result3);
+    if($count3 == 0) {
+        echo '<span class="label label-warning"><i class="fa fa-hourglass-half "></i> لم يختبر بعد</span>';
+    } else {
+        ?>
+            <table class="table table-bordered">
+                <tr class="active">
+                    <th>رقم المحاولة</th>
+                    <th>نتيجة الاختبار</th>
+                    <th>تاريخ الاختبار</th>
+                </tr>
+            
+        <?php
+        $j = 1;
+        while($row3 = mysqli_fetch_array($result3)) {
+            echo '<tr>';
+            echo "<td> المحاولة رقم  $j</td>";
+            echo "<td>100/" . $row3['result'] . "</td>";
+            echo "<td>" . $row3['exam_date'] . "</td>";
+            echo '</tr>';
+            $j++;
+        }
+            echo '</table>';
+    }
+
+    echo '</div>';
+    
+			
+			echo '</td>';
 			
 		echo '</tr>';
 	}

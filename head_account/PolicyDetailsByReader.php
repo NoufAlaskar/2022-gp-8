@@ -70,8 +70,77 @@
                 <form method="post">
                     <input type="hidden" value="<?php echo strip_tags($row1['description']); ?>" class="form-control" name="data">
 				<h4>وصف السياسة</h4>
-				<p class="text-muted"><?php echo nl2br($row1['description']); ?></p>
+				
+				<p class="text-muted" id="ar"><?php echo nl2br($row1['description']); ?></p>
+				<div class="row">
+					<div class="col-md-8 text-left">
+					<input type="submit" value="Translate" class="btn btn-sm btn-info" name="translateBtn">
+					</div>
+					<div class="col-md-4 text-right">
+						<select class="form-control input-sm" id="voiceSelection">
+							<option value="Arabic Male">عربي</option>
+							<option value="UK English Male">English</option>
+						</select>
+						<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+						<script>
+							function SpeechNow() {
+								//alert('Speech Now');
+								var v = $('#voiceSelection').val();
+								var text = document.getElementById('ar').textContent;
+								///alert('Voice : ' + v);
+								if (v == 'Arabic Male' || v == 'Arabic Female') {
+									$("#TranslationDiv").removeClass("enTranslationDir");
+									$("#TranslationDiv").addClass("arTranslationDir");
+								} else {
+									var text =document.getElementById('TranslationDiv').textContent;
+									$("#TranslationDiv").removeClass("arTranslationDir");
+									$("#TranslationDiv").addClass("enTranslationDir");
+								}
+								responsiveVoice.speak(text,v);
+							}
+
+						</script>
+						<input type="button" onclick="SpeechNow()"  class="btn btn-sm btn-info pull-right" type="button" value="قراءة ">
+						<!--<input onclick="responsiveVoice.speak('<?php echo strip_tags($row1[2]); ?>','Arabic Male');" class="btn btn-sm btn-info pull-right" type="button" value="Play "> -->
+						
+					</div>
+				</div>
                    
+				</form>
+				<?php
+if(isset($_POST['translateBtn'])) {
+   $data = $_POST['data'];
+    // When you have your own client ID and secret, put them down here:
+    $CLIENT_ID = "FREE_TRIAL_ACCOUNT";
+    $CLIENT_SECRET = "PUBLIC_SECRET";
+
+    // Specify your translation requirements here:
+    $postData = array(
+      'fromLang' => "ar",
+      'toLang' => "en",
+      'text' => $data
+    );
+
+    $headers = array(
+      'Content-Type: application/json',
+      'X-WM-CLIENT-ID: '.$CLIENT_ID,
+      'X-WM-CLIENT-SECRET: '.$CLIENT_SECRET
+    );
+
+    $url = 'http://api.whatsmate.net/v1/translation/translate';
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+
+    $response = curl_exec($ch);
+    echo "<h4  style='text-align: left;direction: ltr;'>Policy Translated</h4>";
+    echo "<p style='text-align: left;direction: ltr;' class='text-muted' id='TranslationDiv'>".$response ."</p>";
+    curl_close($ch);
+}
+?>
 				<hr>
 				<a href="index.php" class="btn btn-sm btn-warning pull-left" >رجوع</a> 
 				
@@ -165,8 +234,9 @@
     <th>اسم الموظف</th>
     <th>اسم السياسة</th>
     <th>هل تم القراءة ام لا؟</th>
-    <th>تاريخ القراءة</th>
+    <th>تاريخ الموافقة</th>
     <th>هل تم الموافقة ام لا؟</th>
+	<th>علامة الاختبار</th>
 </tr>
 <?php
         $i =1;
@@ -196,7 +266,33 @@
                 echo '<span class="label label-primary"><i class="fa fa-check "></i> تم الموافقة </span>';
             }
             echo '</td>';
-            
+			echo '<td>';
+				$sql3 = "SELECT *  FROM policyExamResult WHERE policy_id=$policy_id and employee_id=$emp_id";
+				$result3 = mysqli_query($link, $sql3);
+				$count3 = mysqli_num_rows($result3);
+				if($count3 == 0) {
+					echo '<span class="label label-warning"><i class="fa fa-hourglass-half "></i> لم يختبر بعد</span>';
+				} else {
+					?>
+						<table class="table table-bordered examresult">
+							<tr class="active">
+								<th>العدد</th>
+								<th>نتيجة الاختبار</th>
+							</tr>
+						
+					<?php
+					$j = 1;
+					while($row3 = mysqli_fetch_array($result3)) {
+						echo '<tr>';
+						echo "<td> المحاولة رقم  $j</td>";
+						echo "<td>100/" . $row3['result'] . "</td>";
+						echo '</tr>';
+						$j++;
+					}
+						echo '</table>';
+				}
+				
+			echo '</td>';
         }
     }
 ?>
@@ -204,4 +300,5 @@
         </div>
   	</div>
   </div>
-<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script><?php include("footer.inc.php") ?>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=6fHWzLr6"></script>
+<?php include("footer.inc.php") ?>

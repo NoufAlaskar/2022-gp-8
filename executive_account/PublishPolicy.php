@@ -12,7 +12,7 @@
 		$run = mysqli_query($link,$sql);
 		if($run){
 			echo '<div class="alert alert-success" role="alert" style="max-width:500px;margin:10px auto;text-align:center">';
-			echo "<p>تم نشر السياسة بنجاح.</p>";
+			echo "<p>تمت نشر السياسة بنجاح.</p>";
 			echo '</div>';
 			echo '<META HTTP-EQUIV="Refresh" Content="1; URL=Policies.php">';    
 			exit;

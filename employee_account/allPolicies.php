@@ -3,6 +3,7 @@
 <?php
 	
 	 $query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and published=1 Order BY policy_id DESC";
+    ///echo $query1 = "SELECT * FROM policy t1 full JOIN policyReaded t2 ON(t1.policy_id = t2.policy_id) WHERE (t1.group_id=$group_id or t1.group_id=0) and t1.published=1 Order BY t1.policy_id DESC";
 
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);

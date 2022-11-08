@@ -35,9 +35,9 @@
     </div>
     <div>
       <ul class="nav navbar-nav ">
-        <li><a href="Policies.php">السياسات المقبولة</a></li>
+        <li><a href="Policies.php">السياسات</a></li>
         <li><a href="PolicyToBeReviewed.php">السياسات الواردة للمراجعة</a></li>
-        
+        <li><a href="viewViolations.php">البلاغات</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 		  <li><a href="changePassword.php">تغيير كلمة المرور</a></li>

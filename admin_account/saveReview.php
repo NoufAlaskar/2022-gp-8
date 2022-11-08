@@ -1,5 +1,5 @@
 <?php include("header.inc.php") ?>
-<h3>تم حفظ مراجعتك</h3>
+<h3>Save Your Review</h3>
 <?php
 if(isset($_POST['saveReview'])) {
 	$admin_id = $admin_id;

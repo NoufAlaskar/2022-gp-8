@@ -11,7 +11,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
-			<img src="assets/imgs/logo.png" class="img-responsive img-thumbnail" style="margin: 10px; height: 350px; ">
+			<img src="assets/imgs/logo.png" class="img-responsive  img-thumbnail mainLogo" style=" ">
 		</div>
 		<div class="col-md-8">
 			<h2>حول الموقع</h2>

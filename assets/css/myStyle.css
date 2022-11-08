@@ -51,14 +51,10 @@ body {
 .navbar-inverse .navbar-nav>li>a {
     color: #fcf8e3;
     color: #a22c2a;
-	'line-height: 60px;
-	font-size: 20px;
+	font-size: 17px;
 	padding: 10px 20px;
 }
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-	
-}
 
 .banner {
 	background: url(../imgs/banner2.jpg);
@@ -163,4 +159,33 @@ body {
 .content h2 {
 	color: #902924
 }
+.mainLogo {
+	margin: 10px; 
+	height: 350px;
+ }
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 767px) { 
+	.banner h1 {
+		font-size: 25px;
+		color: #fcf8e3;
+		color: #921f33;
+	}
+
+	.navbar-inverse .navbar-brand  {
+		display: none;
+	}
+
+	.mainLogo {
+		height: 150px;
+		width: 150px;
+	}
+
+	.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header {
+		margin-right: -15px;
+		margin-left: -15px;
+		background: #434345;
+	}
+}
+
 

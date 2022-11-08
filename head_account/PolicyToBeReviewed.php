@@ -3,8 +3,8 @@
 <h3>عرض السياسات الواردة للمراجعة</h3>
 <?php
 	
-$query1 = "SELECT * FROM policy WHERE  (group_id=$group_id or group_id=0) and approved=1 and sendToHead=1 and published=0 ORDER BY policy_id DESC";
-
+	$query1 = "SELECT * FROM policy WHERE  (group_id=$group_id or group_id=0) and approved=1 and sendToHead=1 and published=0 ORDER BY policy_id DESC";
+	
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
 	if($count == 0) {
@@ -25,6 +25,7 @@ $query1 = "SELECT * FROM policy WHERE  (group_id=$group_id or group_id=0) and ap
 		<th>اسم كاتب السياسة</th>
 		<th>تاريخ كتابة السياسة</th>
 		<th>تفاصيل</th>
+		<th>الاختبار</th>
 	  </tr>
 	  </thead>
 	  <tbody>
@@ -58,7 +59,7 @@ $query1 = "SELECT * FROM policy WHERE  (group_id=$group_id or group_id=0) and ap
 			$run2 = mysqli_query($link, $sql2);
 			$row2No = mysqli_num_rows($run2);
 			echo '<td><a href="policyDetails.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">' . ' تفاصيل </a></td>';
-			
+			echo '<td><a href="ViewPolicyExam.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-success">مراجعة الاختبار</a></td>';
 		echo '</tr>';
 	}
 		}

@@ -1,10 +1,10 @@
 <?php include("header.inc.php"); ?>
 
-<h3>عرض السياسات المرسلة للمراجعة <a href="writePolicy.php" class="btn btn-sm btn-info" style="margin-right: 10px;">كتابة سياسة جديدة</a></h3>
+<h3>عرض السياسات الواردة للمراجعة <a href="writePolicy.php" class="btn btn-sm btn-info" style="margin-right: 10px;">كتابة السياسة</a></h3>
 <?php
 	
-	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and admin_id=$admin_id  Order BY policy_id DESC";
-
+	$query1 = "SELECT * FROM policy WHERE (group_id=$group_id or group_id=0) and admin_id=$admin_id and published = 0 Order BY policy_id DESC";
+ 
 	$result1 = mysqli_query($link, $query1);
 	$count = mysqli_num_rows($result1);
 	if($count == 0) {
@@ -25,6 +25,7 @@
 		<th>اسم كاتب السياسة</th>
 		<th>تاريخ كتابة السياسة</th>
 		<th>المراجعات</th>
+		<th>الاختبار</th>
 	  </tr>
 	  </thead>
 	  <tbody>
@@ -45,7 +46,7 @@
 			}
 			
 			echo '<td>' . $group_name . '</td>';
-			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '">' . $row1['title'] . '</a></td>';
+			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '&canArchive=true">' . $row1['title'] . '</a></td>';
 			$adminWritten = $row1['admin_id'];
 			$sql2 = "SELECT * FROM admin WHERE admin_id={$admin_id}";
 			$run2 = mysqli_query($link, $sql2);
@@ -57,8 +58,18 @@
 			$sql2 = "SELECT * FROM policyReviews WHERE policy_id={$policy_id}";
 			$run2 = mysqli_query($link, $sql2);
 			$row2No = mysqli_num_rows($run2);
-			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-primary">' . $row2No . ' مراجعات </a></td>';
+			echo '<td><a href="PolicyDetails.php?policy_id=' . $row1['policy_id'] . '&canArchive=true" class="btn btn-xs btn-primary">' . $row2No . ' مراجعات </a></td>';
+			echo '<td>';
+			if($adminWritten == $loggedIn_admin_id) {
+
+					echo '<a href="ViewPolicyExam.php?policy_id=' . $row1['policy_id'] . '" class="btn btn-xs btn-success">انشاء اختبار</a>';
+
+				
+			} else {
+				echo '<span class="text-center text-danger">ليس لديك الصلاحية</span>';
+			}
 			
+			echo '</td>';
 		echo '</tr>';
 	}
 		}
